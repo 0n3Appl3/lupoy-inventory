@@ -52,6 +52,10 @@ button:hover {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+#items {
+    padding-bottom: 1rem;
+}
+
 #itemContent {
     background-color: #fefefe;
     margin: auto;
@@ -83,13 +87,14 @@ button:hover {
 }
 
 #wrapper {
-    margin: 0 1% 0 6%;
+    padding-top: 2rem;
+    margin: 0 2rem 0 7rem;
 }
 
 #sidebar {
     margin: 0;
-    padding: 1rem;
-    width: 5%;
+    padding: 0.5vw;
+    width: 5rem;
     background-color: rgb(60, 73, 123);
     color: #eee;
     position: fixed;
@@ -97,10 +102,22 @@ button:hover {
     overflow: auto;
 }
 
+#sidebar a {
+    display: block;
+    color: #eee;
+    padding: 0.5rem;
+    text-decoration: none;
+}
+
+#sidebar a i {
+    font-size: 2vw;
+    /* width: 100%; */
+}
+
 #divider {
     display: flex;
     justify-content: space-between;
-    padding-top: 1rem;
+    /* padding-top: 1rem; */
     margin-bottom: 1rem;
 }
 

@@ -8,12 +8,15 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <script src="js/main.js" defer></script>
     </head>
 
     <body>
         <div id="sidebar">
-            <!-- <h1>House Inventory</h1> -->
+            <a onclick="createItem();"><i class="material-icons">add_circle_outline</i></a>
+            <a onclick="alert('test');"><i class="material-icons">info_outline</i></a>
+            <a onclick="alert('test');"><i class="material-icons">exit_to_app</i></a>
         </div>
         <div id="wrapper">
             <div id="content">
@@ -29,12 +32,15 @@
                             </select>
                         </form>
                     </div>
-                    <div>
-                        <button onclick="createItem();">Add Item</button>
-                        <button id="logout" onclick="alert('test');">Log out</button>
-                    </div>
                 </div>
                 <div id="items"></div>
+                <div id="divider">
+                    <div id="pageInfo"></div>
+                    <div>
+                        <button id="previousPage" onclick="nextPage(false);" disabled>Prev</button>
+                        <button id="nextPage" onclick="nextPage(true);">Next</button>
+                    </div>
+                </div>
             </div>
             <div id="selectedItem">
                 <div id="itemContent"></div>

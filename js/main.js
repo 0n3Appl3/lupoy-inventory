@@ -1,8 +1,16 @@
 let categories = [];
 let locations = [];
 
+let amount = 5;
+let pageNumber = 1;
+
+let totalItems = 0;
+let firstIndex = 0;
+let lastIndex = 0;
+
 let displayItems = (response) => {
     let container = document.getElementById("items");
+    let pageInfo = document.getElementById("pageInfo");
     let headerContainer = document.createElement("div");
     let idHeader = document.createElement("div");
     let nameHeader = document.createElement("div");
@@ -17,6 +25,19 @@ let displayItems = (response) => {
 
     container.innerHTML = "";
     headerContainer.className = "item";
+
+    fetch("./php/get_total_items.php")
+    .then(data => data.json())
+    .then((data) => {
+        totalItems = data[0].count;
+        lastIndex = amount * pageNumber;
+        firstIndex = lastIndex - amount + 1;
+        
+        if (lastIndex > totalItems) {
+            lastIndex = totalItems;
+        }
+        pageInfo.textContent = firstIndex + "-" + lastIndex + " of " + totalItems;
+    });
 
     idHeader.textContent = "ID";
     nameHeader.textContent = "Item Name";
@@ -399,6 +420,26 @@ function createItem() {
     itemContent.appendChild(create);
 }
 
+function nextPage(goingNextPage) {
+    let previousPage = document.getElementById("previousPage");
+    let nextPage = document.getElementById("nextPage");
+
+    if (goingNextPage) {
+        previousPage.disabled = "";
+        pageNumber++;
+        if (lastIndex + amount >= totalItems) {
+            nextPage.disabled = "true";
+        }
+    } else {
+        nextPage.disabled = "";
+        pageNumber--;
+        if (pageNumber == 1) {
+            previousPage.disabled = "true";
+        }
+    }
+    getItems();
+}
+
 function formatCurrency(amount) {
     return amount.toLocaleString('en-NZ', {
         style: "currency",
@@ -407,9 +448,16 @@ function formatCurrency(amount) {
 }
 
 function getItems() {
-    fetch("./php/get_items.php")
+    fetch("./php/get_items.php?amount=" + amount + "&page=" + pageNumber)
     .then(data => data.json())
     .then(displayItems);
+}
+
+function addGlobalOption(selectID) {
+    let option = document.createElement("option");
+    option.value = "0";
+    option.textContent = "Any";
+    selectID.appendChild(option);
 }
 
 window.addEventListener("load", function() {
@@ -420,6 +468,7 @@ window.addEventListener("load", function() {
     .then((data) => {
         let category = document.getElementById("category");
         categories = data;
+        addGlobalOption(category);
 
         categories.forEach(cat => {
             let option = document.createElement("option");
@@ -434,6 +483,7 @@ window.addEventListener("load", function() {
     .then((data) => {
         let location = document.getElementById("location");
         locations = data;
+        addGlobalOption(location);
 
         locations.forEach(loc => {
             let option = document.createElement("option");
