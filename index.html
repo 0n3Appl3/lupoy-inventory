@@ -22,13 +22,13 @@
             <div id="content">
                 <div id="divider">
                     <div>
-                        <form name="query">
-                            <input type="text" id="search" placeholder="Search Item" oninput="alert('test');">
+                        <form name="query" method="GET">
+                            <input type="text" id="search" placeholder="Search Item" oninput="getItems();">
                             <label for="category">Category</label>
-                            <select id="category" name="category" onChange="this.form.submit();">
+                            <select id="category" name="category" onChange="getItems();">
                             </select>
                             <label for="location">Location</label>
-                            <select id="location" name="location" onChange="this.form.submit();">
+                            <select id="location" name="location" onChange="getItems();">
                             </select>
                         </form>
                     </div>
@@ -37,8 +37,8 @@
                 <div id="divider">
                     <div id="pageInfo"></div>
                     <div>
-                        <button id="previousPage" onclick="nextPage(false);" disabled>Prev</button>
-                        <button id="nextPage" onclick="nextPage(true);">Next</button>
+                        <button id="previousPage" onclick="goToNextPage(false);" disabled>Prev</button>
+                        <button id="nextPage" onclick="goToNextPage(true);">Next</button>
                     </div>
                 </div>
             </div>

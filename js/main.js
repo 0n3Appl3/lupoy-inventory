@@ -1,3 +1,9 @@
+let categorySelect = document.getElementById("category");
+let locationSelect = document.getElementById("location");
+let search = document.getElementById("search");
+let previousPage = document.getElementById("previousPage");
+let nextPage = document.getElementById("nextPage");
+
 let categories = [];
 let locations = [];
 
@@ -26,17 +32,25 @@ let displayItems = (response) => {
     container.innerHTML = "";
     headerContainer.className = "item";
 
-    fetch("./php/get_total_items.php")
+    fetch("./php/get_total_items.php?name=" + search.value.replace(/'/g, "\\'") + "&category=" + categorySelect.value + "&location=" + locationSelect.value)
     .then(data => data.json())
     .then((data) => {
         totalItems = data[0].count;
         lastIndex = amount * pageNumber;
-        firstIndex = lastIndex - amount + 1;
+
+        firstIndex = (totalItems > 0) ? lastIndex - amount + 1 : 0;
+        lastIndex = (lastIndex > totalItems) ? totalItems : lastIndex;
         
-        if (lastIndex > totalItems) {
-            lastIndex = totalItems;
-        }
         pageInfo.textContent = firstIndex + "-" + lastIndex + " of " + totalItems;
+
+        if (lastIndex == totalItems) {
+            nextPage.disabled = "true";
+        } else {
+            nextPage.disabled = "";
+        }
+        if (firstIndex <= 1) {
+            previousPage.disabled = "true";
+        }
     });
 
     idHeader.textContent = "ID";
@@ -420,10 +434,7 @@ function createItem() {
     itemContent.appendChild(create);
 }
 
-function nextPage(goingNextPage) {
-    let previousPage = document.getElementById("previousPage");
-    let nextPage = document.getElementById("nextPage");
-
+function goToNextPage(goingNextPage) {
     if (goingNextPage) {
         previousPage.disabled = "";
         pageNumber++;
@@ -448,7 +459,7 @@ function formatCurrency(amount) {
 }
 
 function getItems() {
-    fetch("./php/get_items.php?amount=" + amount + "&page=" + pageNumber)
+    fetch("./php/get_items.php?name=" + search.value.replace(/'/g, "\\'") + "&amount=" + amount + "&page=" + pageNumber + "&category=" + categorySelect.value + "&location=" + locationSelect.value)
     .then(data => data.json())
     .then(displayItems);
 }
