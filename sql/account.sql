@@ -31,7 +31,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `username`, `password`) VALUES
-(1, 'lupoy', 'L00p0!4');
+(1, '[username]', '[password]');
 
 --
 -- Indexes for dumped tables

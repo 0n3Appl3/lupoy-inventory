@@ -2,7 +2,7 @@
     /*
      * Specify what kind of records to search.
      */
-    function applyFilter($filter, $is_first_filter) {
+    function apply_filter($filter, $is_first_filter) {
         global $query;
         $and_keyword = " ";
         $value = $_GET[$filter];

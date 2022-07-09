@@ -8,12 +8,12 @@
     $query = "select * from item where";
 
     // Apply query filters.
-    applyFilter("name", true);
-    applyFilter("category", false);
-    applyFilter("location", false);
+    apply_filter("name", true);
+    apply_filter("category", false);
+    apply_filter("location", false);
 
     // Limit how many records are displayed at once.
-    $query = $query . " limit " . $_GET['amount'] . " offset " . $offset . ";";
+    $query = $query . " order by " . $_GET['column'] . " " . $_GET['order'] . " limit " . $_GET['amount'] . " offset " . $offset . ";";
     // Run the query.
     $result = $con->query($query);
 

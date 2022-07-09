@@ -7,9 +7,9 @@
     $query = "select count(*) as count from item where";
 
     // Apply query filters.
-    applyFilter("name", true);
-    applyFilter("category", false);
-    applyFilter("location", false);
+    apply_filter("name", true);
+    apply_filter("category", false);
+    apply_filter("location", false);
 
     $query = $query . ";";
     $result = $con->query($query);

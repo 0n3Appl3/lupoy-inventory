@@ -158,11 +158,15 @@ button:hover {
     /* color: #eee; */
 }
 
-.item:hover {
+.item:hover:not(:first-child) {
     background-color: rgb(175, 183, 218);
     cursor: pointer;
 }
 
 .modalText {
     font-size: 2rem;
+}
+
+.item .material-icons {
+    vertical-align: -8px;
 }

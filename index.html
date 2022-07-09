@@ -14,8 +14,8 @@
 
     <body>
         <div id="sidebar">
-            <a onclick="createItem();"><i class="material-icons">add_circle_outline</i></a>
-            <a onclick="alert('test');"><i class="material-icons">info_outline</i></a>
+            <a onclick="createItem();"><i class="material-icons">add_circle</i></a>
+            <a onclick="alert('test');"><i class="material-icons">library_books</i></a>
             <a onclick="alert('test');"><i class="material-icons">exit_to_app</i></a>
         </div>
         <div id="wrapper">
@@ -23,12 +23,12 @@
                 <div id="divider">
                     <div>
                         <form name="query" method="GET">
-                            <input type="text" id="search" placeholder="Search Item" oninput="getItems();">
+                            <input type="text" id="search" placeholder="Search Item" oninput="pageNumber=1;getItems();">
                             <label for="category">Category</label>
-                            <select id="category" name="category" onChange="getItems();">
+                            <select id="category" name="category" onchange="pageNumber=1;getItems();">
                             </select>
                             <label for="location">Location</label>
-                            <select id="location" name="location" onChange="getItems();">
+                            <select id="location" name="location" onchange="pageNumber=1;getItems();">
                             </select>
                         </form>
                     </div>

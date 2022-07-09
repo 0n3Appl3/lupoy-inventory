@@ -9,6 +9,8 @@ let locations = [];
 
 let amount = 5;
 let pageNumber = 1;
+let column = "id";
+let order = "asc";
 
 let totalItems = 0;
 let firstIndex = 0;
@@ -53,16 +55,16 @@ let displayItems = (response) => {
         }
     });
 
-    idHeader.textContent = "ID";
-    nameHeader.textContent = "Item Name";
+    idHeader.innerHTML = "ID<a onclick='sortItems(`id`);'><i id='id' class='material-icons'>unfold_more</i></a>";
+    nameHeader.innerHTML = "Item Name<a onclick='sortItems(`name`);'><i id='name' class='material-icons'>unfold_more</i></a>";
     makeHeader.textContent = "Make";
     modelHeader.textContent = "Model";
     categoryHeader.textContent = "Category";
     locationHeader.textContent = "Location";
     purchasedFromHeader.textContent = "Purchased From";
-    purchaseDateHeader.textContent = "Purchase Date";
+    purchaseDateHeader.innerHTML = "Purchase Date<a onclick='sortItems(`purchase_date`);'><i id='purchase_date' class='material-icons'>unfold_more</i></a>";
     quantityHeader.textContent = "Quantity";
-    priceHeader.textContent = "Price";
+    priceHeader.innerHTML = "Price<a onclick='sortItems(`price`);'><i id='price' class='material-icons'>unfold_more</i></a>";
 
     headerContainer.appendChild(idHeader);
     headerContainer.appendChild(nameHeader);
@@ -75,6 +77,8 @@ let displayItems = (response) => {
     headerContainer.appendChild(quantityHeader);
     headerContainer.appendChild(priceHeader);
     container.appendChild(headerContainer);
+
+    toggleOrderIcons(column);
 
     response.forEach(element => {
         let itemContainer = document.createElement("div");
@@ -458,8 +462,48 @@ function formatCurrency(amount) {
     });
 }
 
+function toggleOrder(type) {
+    switch(order) {
+        case "asc":
+            order = "desc";
+            break;
+        case "desc":
+            order = "asc";
+            break;
+        default:
+            break;
+    }
+    if (column != type) {
+        order = "asc";
+    }
+}
+
+function toggleOrderIcons(type) {
+    let columnIcon = document.getElementById(column);
+    let icon = document.getElementById(type);
+
+    switch(order) {
+        case "asc":
+            icon.innerHTML = "expand_more";
+            break;
+        case "desc":
+            icon.innerHTML = "expand_less";
+            break;
+        default:
+            break;
+    }
+    //columnIcon.innerHTML = "unfold_more";
+}
+
+function sortItems(type) {
+    toggleOrder(type);
+    column = type;
+    getItems();
+    // toggleOrderIcons(type);
+}
+
 function getItems() {
-    fetch("./php/get_items.php?name=" + search.value.replace(/'/g, "\\'") + "&amount=" + amount + "&page=" + pageNumber + "&category=" + categorySelect.value + "&location=" + locationSelect.value)
+    fetch("./php/get_items.php?name=" + search.value.replace(/'/g, "\\'") + "&amount=" + amount + "&page=" + pageNumber + "&category=" + categorySelect.value + "&location=" + locationSelect.value + "&column=" + column + "&order=" + order)
     .then(data => data.json())
     .then(displayItems);
 }
