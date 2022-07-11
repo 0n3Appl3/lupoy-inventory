@@ -14,13 +14,22 @@
 
     <body>
         <div id="sidebar">
-            <a onclick="createItem();"><i class="material-icons">add_circle</i></a>
-            <a onclick="alert('test');"><i class="material-icons">library_books</i></a>
-            <a onclick="alert('test');"><i class="material-icons">exit_to_app</i></a>
+            <div class="tool-tip">
+                <a onclick="createItem();"><i class="material-icons">add_circle</i></a>
+                <span>Add Item</span>
+            </div>
+            <div class="tool-tip">
+                <a onclick="alert('test');"><i class="material-icons">library_books</i></a>
+                <span>Total Cost</span>
+            </div>
+            <div class="tool-tip">
+                <a onclick="alert('test');"><i class="material-icons">exit_to_app</i></a>
+                <span>Log out</span>
+            </div>
         </div>
         <div id="wrapper">
             <div id="content">
-                <div id="divider">
+                <div id="divider-form">
                     <div>
                         <form name="query" method="GET">
                             <input type="text" id="search" placeholder="Search Item" oninput="pageNumber=1;getItems();">

@@ -38,7 +38,9 @@ INSERT INTO `category` (`id`, `name`) VALUES
 (6, 'Kitchen Equipment'),
 (7, 'Tool'),
 (8, 'Health Equipment'),
-(9, 'Storage');
+(9, 'Storage'),
+(10, 'Toy'),
+(11, 'Other');
 
 --
 -- Indexes for dumped tables

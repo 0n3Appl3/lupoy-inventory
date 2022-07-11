@@ -249,7 +249,7 @@ let displayItemInfo = (item) => {
         purchaseDate.readOnly = "";
         quantity.readOnly = "";
         price.readOnly = "";
-        save.style.display = "block";
+        save.style.display = "inline-block";
         edit.style.display = "none";
     }
 
@@ -268,7 +268,7 @@ let displayItemInfo = (item) => {
         quantity.readOnly = "true";
         price.readOnly = "true";
         save.style.display = "none";
-        edit.style.display = "block";
+        edit.style.display = "inline-block";
 
         fetch("./php/save_item_data.php", {
             method: "POST",
