@@ -118,7 +118,7 @@ let displayItems = (response) => {
         purchasedFrom.textContent = element.purchased_from;
         purchaseDate.textContent = element.purchase_date;
         quantity.textContent = element.quantity;
-        price.textContent = formatCurrency(parseInt(element.price));
+        price.textContent = formatCurrency(parseFloat(element.price));
 
         itemContainer.appendChild(id);
         itemContainer.appendChild(name);
@@ -162,6 +162,16 @@ let displayItemInfo = (item) => {
     let quantityTxt = document.createElement("p");
     let priceTxt = document.createElement("p");
 
+    let inputs = {
+        name: name,
+        make: make,
+        model: model,
+        purchasedFrom: purchasedFrom,
+        purchaseDate: purchaseDate,
+        quantity: quantity,
+        price: price
+    };
+
     nameTxt.textContent = "Item Name";
     makeTxt.textContent = "Make";
     modelTxt.textContent = "Model";
@@ -175,7 +185,7 @@ let displayItemInfo = (item) => {
     viewContainer.style.display = "block";
     itemContent.innerHTML = "";
 
-    header.className = "modalText";
+    header.className = "modal-text";
     header.textContent = "Item Details";
 
     name.type = "text";
@@ -257,40 +267,42 @@ let displayItemInfo = (item) => {
     save.value = "Save";
     save.style.display = "none";
     save.onclick = function() {
-        // TODO: Input checking, ensure to cleanse before putting in query.
-        name.readOnly = "true";
-        make.readOnly = "true";
-        model.readOnly = "true";
-        category.disabled = "true";
-        location.disabled = "true";
-        purchasedFrom.readOnly = "true";
-        purchaseDate.readOnly = "true";
-        quantity.readOnly = "true";
-        price.readOnly = "true";
-        save.style.display = "none";
-        edit.style.display = "inline-block";
+        let input = {
+            id: item.id,
+            name: name.value.replace(/'/g, "\\'"),
+            make: make.value.replace(/'/g, "\\'"),
+            model: model.value.replace(/'/g, "\\'"),
+            category: category.value,
+            location: location.value,
+            purchased_from: purchasedFrom.value.replace(/'/g, "\\'"),
+            purchase_date: purchaseDate.value,
+            quantity: quantity.value,
+            price: price.value
+        }
+        if (validInput(input, inputs)) {
+            name.readOnly = "true";
+            make.readOnly = "true";
+            model.readOnly = "true";
+            category.disabled = "true";
+            location.disabled = "true";
+            purchasedFrom.readOnly = "true";
+            purchaseDate.readOnly = "true";
+            quantity.readOnly = "true";
+            price.readOnly = "true";
+            save.style.display = "none";
+            edit.style.display = "inline-block";
 
-        fetch("./php/save_item_data.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                id: item.id,
-                name: name.value.replace(/'/g, "\\'"),
-                make: make.value.replace(/'/g, "\\'"),
-                model: model.value.replace(/'/g, "\\'"),
-                category: category.value,
-                location: location.value,
-                purchased_from: purchasedFrom.value.replace(/'/g, "\\'"),
-                purchase_date: purchaseDate.value,
-                quantity: quantity.value,
-                price: price.value
+            fetch("./php/save_item_data.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(input)
             })
-        })
-        .then(() => { 
-            getItems();
-        });
+            .then(() => { 
+                getItems();
+            });
+        }
     }
 
     remove.type = edit.type;
@@ -327,6 +339,31 @@ let displayItemInfo = (item) => {
     itemContent.appendChild(remove);
 }
 
+let displayTotalCost = () => {
+    let itemContent = document.getElementById("itemContent");
+    let header = document.createElement("p");
+    let description = document.createElement("p");
+    let totalCost = document.createElement("p");
+
+    viewContainer.style.display = "block";
+    itemContent.innerHTML = "";
+
+    header.className = "modal-text";
+    header.textContent = "Total Cost";
+    description.textContent = "This is your total household inventory value.";
+    totalCost.className = "total-cost";
+
+    fetch("./php/get_total_cost.php")
+    .then(data => data.json())
+    .then((data) => {
+        totalCost.textContent = formatCurrency(parseFloat(data));
+    });
+
+    itemContent.appendChild(header);
+    itemContent.appendChild(description);
+    itemContent.appendChild(totalCost);
+}
+
 function createItem() {
     let itemContent = document.getElementById("itemContent");
     let header = document.createElement("p");
@@ -351,6 +388,16 @@ function createItem() {
     let quantityTxt = document.createElement("p");
     let priceTxt = document.createElement("p");
 
+    let inputs = {
+        name: name,
+        make: make,
+        model: model,
+        purchasedFrom: purchasedFrom,
+        purchaseDate: purchaseDate,
+        quantity: quantity,
+        price: price
+    };
+
     nameTxt.textContent = "Item Name";
     makeTxt.textContent = "Make";
     modelTxt.textContent = "Model";
@@ -364,7 +411,7 @@ function createItem() {
     viewContainer.style.display = "block";
     itemContent.innerHTML = "";
 
-    header.className = "modalText";
+    header.className = "modal-text";
     header.textContent = "New Item";
 
     name.type = "text";
@@ -392,28 +439,31 @@ function createItem() {
     create.type = "button";
     create.value = "Add";
     create.onclick = function() {
-        // TODO: Input checking, ensure to cleanse before putting in query.
-        fetch("./php/create_item.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: name.value.replace(/'/g, "\\'"),
-                make: make.value.replace(/'/g, "\\'"),
-                model: model.value.replace(/'/g, "\\'"),
-                category: category.value,
-                location: location.value,
-                purchased_from: purchasedFrom.value.replace(/'/g, "\\'"),
-                purchase_date: purchaseDate.value,
-                quantity: quantity.value,
-                price: price.value
+        let input = {
+            name: name.value.replace(/'/g, "\\'"),
+            make: make.value.replace(/'/g, "\\'"),
+            model: model.value.replace(/'/g, "\\'"),
+            category: category.value,
+            location: location.value,
+            purchased_from: purchasedFrom.value.replace(/'/g, "\\'"),
+            purchase_date: purchaseDate.value,
+            quantity: quantity.value,
+            price: price.value
+        };
+
+        if (validInput(input, inputs)) {
+            fetch("./php/create_item.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(input)
             })
-        })
-        .then(() => { 
-            getItems();
-            viewContainer.style.display = "none";
-        });
+            .then(() => { 
+                getItems();
+                viewContainer.style.display = "none";
+            });
+        }
     }
 
     itemContent.appendChild(header);
@@ -513,6 +563,39 @@ function addGlobalOption(selectID) {
     option.value = "0";
     option.textContent = "Any";
     selectID.appendChild(option);
+}
+
+function validStringInput(str) {
+    return str.trim() != "";
+}
+
+function validInput(input, inputs) {
+    let validName = (validStringInput(input.name)) ? true : false;
+    let validMake = (validStringInput(input.make)) ? true : false;
+    let validModel = (validStringInput(input.model)) ? true : false;
+    let validPurchasedFrom = (validStringInput(input.purchased_from)) ? true : false;
+    let validPurchaseDate = (validStringInput(input.purchase_date)) ? true: false;
+    let validQuantity = (/[1-9]\d*/g.test(input.quantity) && parseInt(input.quantity) > 0) ? true : false;
+    let validPrice = (/\d+\.?\d{0,2}/g.test(input.price) && parseInt(input.price) >= 0) ? true : false;
+
+    if (!validName) { inputs.name.placeholder = "You need to enter a valid item name."; }
+    if (!validMake) { inputs.make.placeholder = "You need to enter a valid make."; }
+    if (!validModel) { inputs.model.placeholder = "You need to enter a valid model name."; }
+    if (!validPurchasedFrom) { inputs.purchasedFrom.placeholder = "You need to enter a valid place the item was bought."; }
+    if (!validPurchaseDate) { 
+        inputs.purchaseDate.type = "text";
+        inputs.purchaseDate.placeholder = "You need to select a valid purchase date.";
+        inputs.purchaseDate.onfocus = () => { inputs.purchaseDate.type = "date" };
+    }
+    if (!validQuantity) { 
+        inputs.quantity.value = "";
+        inputs.quantity.placeholder = "You need to enter a valid quantity that is at least one.";
+    }
+    if (!validPrice) { 
+        inputs.price.value = "";
+        inputs.price.placeholder = "You need to enter a valid item price.";
+    }
+    return validName && validMake && validModel && validPurchasedFrom && validPurchaseDate && validQuantity && validPrice;
 }
 
 window.addEventListener("load", function() {

@@ -41,6 +41,11 @@ button, input[type="button"] {
     transition: 0.2s ease-in-out;
 }
 
+input:read-only:not(input[type="button"]) {
+    color: rgb(170, 170, 170);
+    opacity: 0.7;
+}
+
 input, select {
     margin-right: 1rem;
     border: 2px solid #c4c4c4;
@@ -98,6 +103,10 @@ button:disabled {
 
 #itemContent p {
     margin: 0.7rem 0 0 0;
+}
+
+#itemContent ::placeholder {
+    color: red;
 }
 
 #logout {
@@ -192,12 +201,17 @@ button:disabled {
     cursor: pointer;
 }
 
-.modalText {
+.modal-text {
     font-size: 2rem;
 }
 
 .item .material-icons {
     vertical-align: -8px;
+}
+
+.total-cost {
+    font-size: 4vmax;
+    font-weight: bold;
 }
 
 .tool-tip, .tool-tip i, .tool-tip > span {
@@ -273,6 +287,10 @@ button:disabled {
 
     #itemContent {
         width: 60%;
+    }
+
+    .modal-text {
+        font-size: 4vmax;
     }
 
     .tool-tip {
