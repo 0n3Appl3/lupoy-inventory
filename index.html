@@ -13,46 +13,62 @@
     </head>
 
     <body>
-        <div id="sidebar">
-            <div class="tool-tip">
-                <a onclick="createItem();"><i class="material-icons">add_circle</i></a>
-                <span>Add Item</span>
-            </div>
-            <div class="tool-tip">
-                <a onclick="displayTotalCost();"><i class="material-icons">library_books</i></a>
-                <span>Total Cost</span>
-            </div>
-            <div class="tool-tip">
-                <a onclick="alert('test');"><i class="material-icons">exit_to_app</i></a>
-                <span>Log out</span>
+        <div id="login-page">
+            <div class="login-panel">
+                <div class="login-content">
+                    <h1>Login</h1>
+                    <form name="login" method="POST">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" autofocus>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password">
+                        <input type="button" id="submit" value="Login" onclick="checkPassword();">
+                    </form>
+                </div>
             </div>
         </div>
-        <div id="wrapper">
-            <div id="content">
-                <div id="divider-form">
-                    <div>
-                        <form name="query" method="GET">
-                            <input type="text" id="search" placeholder="Search Item" oninput="pageNumber=1;getItems();">
-                            <label for="category">Category</label>
-                            <select id="category" name="category" onchange="pageNumber=1;getItems();">
-                            </select>
-                            <label for="location">Location</label>
-                            <select id="location" name="location" onchange="pageNumber=1;getItems();">
-                            </select>
-                        </form>
-                    </div>
+        <div id="main-page">
+            <div id="sidebar">
+                <div class="tool-tip">
+                    <a onclick="createItem();"><i class="material-icons">add_circle</i></a>
+                    <span>Add Item</span>
                 </div>
-                <div id="items"></div>
-                <div id="divider">
-                    <div id="pageInfo"></div>
-                    <div>
-                        <button id="previousPage" onclick="goToNextPage(false);" disabled>Prev</button>
-                        <button id="nextPage" onclick="goToNextPage(true);">Next</button>
-                    </div>
+                <div class="tool-tip">
+                    <a onclick="displayTotalCost();"><i class="material-icons">library_books</i></a>
+                    <span>Total Cost</span>
+                </div>
+                <div class="tool-tip">
+                    <a onclick="logOut();"><i class="material-icons">exit_to_app</i></a>
+                    <span>Log out</span>
                 </div>
             </div>
-            <div id="selectedItem">
-                <div id="itemContent"></div>
+            <div id="wrapper">
+                <div id="content">
+                    <div id="divider-form">
+                        <div>
+                            <form name="query" method="GET">
+                                <input type="text" id="search" placeholder="Search Item" oninput="pageNumber=1;getItems();">
+                                <label for="category">Category</label>
+                                <select id="category" name="category" onchange="pageNumber=1;getItems();">
+                                </select>
+                                <label for="location">Location</label>
+                                <select id="location" name="location" onchange="pageNumber=1;getItems();">
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="items"></div>
+                    <div id="divider">
+                        <div id="pageInfo"></div>
+                        <div>
+                            <button id="previousPage" onclick="goToNextPage(false);" disabled>Prev</button>
+                            <button id="nextPage" onclick="goToNextPage(true);">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="selectedItem">
+                    <div id="itemContent"></div>
+                </div>
             </div>
         </div>
     </body>

@@ -36,12 +36,14 @@ button, input[type="button"] {
     text-decoration: none;
     /* margin-top: 1rem; */
     /* background-color: rgb(175, 183, 218); */
-    background-color: rgb(112, 127, 185);
-    padding: 0.5rem 1.5rem;
+    /* background-color: rgb(112, 127, 185); */
+    background: rgb(101,114,226);
+    color: #eee;
+    padding: 0.7rem 1.8rem;
     transition: 0.2s ease-in-out;
 }
 
-input:read-only:not(input[type="button"]) {
+input:read-only:not(input[type="button"]):not(input[type="submit"]) {
     color: rgb(170, 170, 170);
     opacity: 0.7;
 }
@@ -53,12 +55,22 @@ input, select {
 
 button:hover, input[type="button"]:hover {
     background-color: rgb(231, 231, 231);
+    color: rgb(46, 46, 46);
     cursor: pointer;
 }
 
 button:disabled {
     background-color: #e1e1e1;
+    color: rgb(46, 46, 46);
     cursor: default;
+}
+
+button, input[type="button"] {
+    border-radius: 0.3rem;
+}
+
+#main-page {
+    display: none;
 }
 
 #selectedItem {
@@ -78,6 +90,10 @@ button:disabled {
 #items {
     margin-bottom: 1rem;
     overflow-x: scroll;
+}
+
+#itemContent, .login-content {
+    border-radius: 0.5rem;
 }
 
 #itemContent {
@@ -105,7 +121,7 @@ button:disabled {
     margin: 0.7rem 0 0 0;
 }
 
-#itemContent ::placeholder {
+#itemContent ::placeholder, #login-page ::placeholder {
     color: red;
 }
 
@@ -124,7 +140,8 @@ button:disabled {
     /* padding: 0.5vw; */
     padding: 0.5rem;
     width: 4vw;
-    background-color: rgb(60, 73, 123);
+    /* background-color: rgb(60, 73, 123); */
+    background: rgb(101,114,226);
     text-align: center;
     color: #eee;
     position: fixed;
@@ -156,6 +173,38 @@ button:disabled {
     /* padding-top: 1rem; */
 }
 
+.login-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-color:rgb(60, 73, 123); */
+    background: rgb(101,114,226);
+    background: linear-gradient(0deg, rgba(101,114,226,1) 4%, rgba(91,145,231,1) 96%);
+}
+
+.login-content {
+    background-color: #eee;
+    padding: 3rem;
+}
+
+.login-content h1 {
+    margin-top: 0;
+}
+
+.login-content input[type="text"], .login-content input[type="password"] {
+    margin-top: 0.4rem;
+}
+
+.login-content input:not(:last-child) {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.login-content input[type="text"], .login-content input[type="password"] {
+    width: 100%;
+}
+
 .item {
     display: grid;
     grid-template-columns: 5% 16% 8% 16% repeat(4, 10%) 5% 10%;
@@ -173,9 +222,9 @@ button:disabled {
     border-bottom: none;
 }
 
-/* .item:nth-child(odd) {
-    background-color: rgb(221, 221, 221);
-} */
+.item:nth-child(odd) {
+    background-color: rgb(244, 244, 244);
+}
 
 .item div {
     float: left;
@@ -197,7 +246,8 @@ button:disabled {
 
 .item:hover:not(:first-child) {
     /* background-color: rgb(175, 183, 218); */
-    background-color: rgb(219, 219, 219);
+    /* background-color: rgb(219, 219, 219); */
+    background-color: rgba(91,145,231, 0.1);
     cursor: pointer;
 }
 
@@ -210,6 +260,7 @@ button:disabled {
 }
 
 .total-cost {
+    margin-top: 1rem;
     font-size: 4vmax;
     font-weight: bold;
 }

@@ -1,3 +1,10 @@
+let loginPage = document.getElementById("login-page");
+let mainPage = document.getElementById("main-page");
+
+let username = document.getElementById("username");
+let password = document.getElementById("password");
+
+let container = document.getElementById("items");
 let categorySelect = document.getElementById("category");
 let locationSelect = document.getElementById("location");
 let search = document.getElementById("search");
@@ -17,7 +24,7 @@ let firstIndex = 0;
 let lastIndex = 0;
 
 let displayItems = (response) => {
-    let container = document.getElementById("items");
+    // let container = document.getElementById("items");
     let pageInfo = document.getElementById("pageInfo");
     let headerContainer = document.createElement("div");
     let idHeader = document.createElement("div");
@@ -598,7 +605,51 @@ function validInput(input, inputs) {
     return validName && validMake && validModel && validPurchasedFrom && validPurchaseDate && validQuantity && validPrice;
 }
 
-window.addEventListener("load", function() {
+function checkPassword() {
+    let validUsername = (validStringInput(username.value)) ? true : false;
+    let validPassword = (validStringInput(password.value)) ? true : false;
+
+    if (validUsername && validPassword) {
+        fetch("./php/check_password.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username.value,
+                password: password.value
+            })
+        })
+        .then(data => data.json())
+        .then((correctPassword) => {
+            if (correctPassword) {
+                loginPage.style.display = "none";
+                mainPage.style.display = "block";
+                showData();
+            } else {
+                password.value = "";
+                password.placeholder = "Incorrect details. Try again.";
+            }
+        });
+    }
+
+    if (!validUsername) {
+        username.value = "";
+        username.placeholder = "Enter the username.";
+    }
+    if (!validPassword) {
+        password.value = "";
+        password.placeholder = "Enter the password.";
+    }
+}
+
+function logOut() {
+    container.innerHTML = "";
+    loginPage.style.display = "block";
+    mainPage.style.display = "none";
+}
+
+function showData() {
     getItems();
 
     fetch("./php/get_categories.php")
@@ -630,6 +681,11 @@ window.addEventListener("load", function() {
             location.appendChild(option);
         });
     });
+}
+
+window.addEventListener("load", function() {
+    username.value = "";
+    password.value = "";
 });
 
 window.onclick = function(event) {
